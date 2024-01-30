@@ -1,13 +1,11 @@
 <script setup>
-import {reactive, computed, ref} from 'vue'
+import { ref } from 'vue'
 
-const author = ref({
-	name: 'John Doe',
-	books: [1, 2, 3]
-})
+const message = ref('')
 </script>
 
 <template>
-	<p>Has published books:</p>
-	<span>{{ author.books.length > 2? 'Yes' : 'No' }} </span>
+        <span>Multi-line message is: </span>
+	<p style="white-space: pre-line;"> {{ message }} </p>
+	<textarea v-model = "message" placeholder = "add multiple lines" ></textarea>
 </template>

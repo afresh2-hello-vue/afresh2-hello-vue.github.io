@@ -1,20 +1,13 @@
 <script setup>
-import article from '@/assets/science.json'
+import {reactive, computed, ref} from 'vue'
 
-const articles = article
+const author = ref({
+	name: 'John Doe',
+	books: [1, 2, 3]
+})
 </script>
 
 <template>
-<div v-for="(a, index) in articles">
-	<div v-if="a.title.includes('코로나')">
-		<br>
-		no : {{ index + 1 }} <br>
-		author : {{ a.author }} <br>
-		title : {{ a.title }} <br>
-		description : {{ a.description }} <br>
-		url : {{ a.url }} <br>
-		content : {{ a.content }} <br>
-		<hr>
-	</div>
-</div>
+	<p>Has published books:</p>
+	<span>{{ author.books.length > 2? 'Yes' : 'No' }} </span>
 </template>

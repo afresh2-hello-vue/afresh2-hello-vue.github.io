@@ -22,7 +22,9 @@ fetchData()
 
 function get(){
  todoId.value++
- fetchData()
+ // *변경사항* todoId변수값이 변경될 때마다 fetchData함수를 호출하도록 감시 설정
+ watch(todoId, fetchData)
+ // fetchData()
 }
 
 </script>

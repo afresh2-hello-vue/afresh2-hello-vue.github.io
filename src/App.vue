@@ -1,39 +1,38 @@
 <script setup>
-import { ref } from 'vue'
+// ref : 반응적인 데이터를 생성하는 함수
+// watch : 데이터의 변경을 감시하는 함수
+import { ref, watch } from 'vue'
 
-let id = 0
+// todoId라는 반응적인 데이터를 생성하고, 초기값으로 1 설정
+const todoId = ref(1);
+// todoData라는 반응적인 데이터를 생성하고, 초기값으로 null 설정
+// 비동기로 받아온 할일 데이터를 저장할 용도로 사용된다
+const todoData = ref(null);
 
-const newTodo = ref('')
-const todos = ref([
-	{ id: id++, issue: 'Backlog' } , { id: id++, issue: 'Todo'},
-	{ id: id++, issue: 'Going Hawaii'}
-])
-
-function addTodo(/*e*/){
-	//e.preventDefault();
-	todos.value.push({id: id++, issue: newTodo.value})	
+// 비동기 함수
+// : fetch를 사용하여 외부API에서 할일 데이터를 가져오고, 그 결과를 todoData에 저장
+async function fetchData() {
+ todoData.value = null
+ const res = await fetch(
+  `https://jsonplaceholder.typicode.com/todos/${todoId.value}`
+ )
+ todoData.value = await res.json()
 }
+fetchData()
 
-
-function removeTodo(todo){
-	todos.value.splice(todo.index, 1)
-	//todos remove ...[].filter(t/f)
-	//todos.value = todos.value.filter((t) => t !== ?)
+function get(){
+ todoId.value++
+ fetchData()
 }
 
 </script>
 
 <template>
-	<form @submit.prevent ="addTodo">
-		<input v-model = "newTodo">
-		<button>할 일 추가</button>
-	</form>
-	<ul>
-		<li v-for = "todo in todos">
-			{{ todo.issue }} - <button @click = "removeTodo(todo)" > Done </button>	
-		</li>
-	</ul>
+ <p>Todo id : {{ todoId }}</p>
+ <button @click="get" :disabled="!todoData">Fetch next todo</button>
+
+ <!-- 데이터가 로딩 중인 동안 화면에 "Loading..." 메시지 출력 -->
+ <p v-if="!todoData">Loading...</p>
+ <!-- 데이터가 로딩되면 todoData를 출력 -->
+ <pre v-else>{{ todoData }}</pre>
 </template>
-
-
-

@@ -4,26 +4,13 @@ import { ref } from 'vue'
 // 상태 변수 설정
 const show = ref(true)
 const list = ref([1, 2, 3])
-
-// 함수
-const addItemToList = () => {
-	list.value.push(list.value.length + 1)
-}
-
-const removeItemFromList = () => {
-	list.value.pop()
-}
-
-const reverseListOrder = () => {
-	list.value.reverse()
-}
 </script>
 
 <template>
 	<button @click = "show = !show">List렌더링 ON/OFF</button>
-        <button @click = "addItemToList">List추가</button>
-        <button @click = "removeItemFromList">List제거</button>
-        <button @click = "reverseListOrder">List뒤집기</button>
+        <button @click = "list.push(list.length + 1)">List추가</button>
+        <button @click = "list.pop()">List제거</button>
+        <button @click = "list.reverse()">List뒤집기</button>
 
 	<!-- List를 보여주는 부분 -->
 	<ul v-if="show">

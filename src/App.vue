@@ -1,11 +1,17 @@
 <script setup>
-import category from '@/assets/category.json'
+import article from '@/assets/science.json'
 
-const categories = category
+const articles = article
 </script>
 
 <template>
-<li v-for="obj in categories">
-	{{ obj.name }} - {{ obj.code }}
-</li>
+<div v-for="(a, index) in articles">
+	no : {{ index + 1 }} <br>
+	author : {{ a.author }} <br>
+	title : {{ a.title }} <br>
+	description : {{ a.description }} <br>
+	url : {{ a.url }} <br>
+	content : {{ a.content }} <br>
+	<hr>
+</div>
 </template>
